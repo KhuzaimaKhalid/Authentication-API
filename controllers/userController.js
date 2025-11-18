@@ -118,9 +118,9 @@ const resetUserPassword = async (req,res) =>{
             if(password !== confirm_password){
                 res.status(400).send({ "status": "failed", "message": "New Password and Confirm New Password doesn't match" })
             } else{
-                const salt = bcrypt.genSalt(10)
-                const newHashedPassword = bcrypt.hash(password,salt)
-                await userModel.findbyIdAndUpdate(user._id, {$set: {password:  newHashedPassword}})
+                const salt = await bcrypt.genSalt(10)
+                const newHashedPassword = await bcrypt.hash(password,salt)
+                await userModel.findByIdAndUpdate(user._id, {$set: {password:  newHashedPassword}})
                 res.send({ "status": "success", "message": "Password Reset Successfully" })
             }
         } else{
